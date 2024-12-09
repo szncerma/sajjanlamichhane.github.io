@@ -1,17 +1,13 @@
-- name: Dr. Richard Feynman
-  photo: headshot.jpg
-  info: Richard C. Tolman Professor, California Institute of Technology
-  email: richard@university.edu
-  github: https://github.com/
-  researchgate: https://www.researchgate.net/
-  scholar: https://scholar.google.com/citations?user=B7vSqZsAAAAJ
-  cv: cv/cv.pdf
-  # Change the items in "education" you have (up to 6)
-  education:
-    [
-      "(1942) Ph.D. Physics, Princeton University",
-      "(1939) B.S. Physics, Massachusetts Institute of Technology",
-    ]
-
-  educationshort:
-    ["(1942) Ph.D. Physics, Princeton", "(1939) B.S. Physics, MIT"]
+- name: Uddhav P. Gautam
+  photo: Uddhav.jpg
+  info: PhD Candidate
+  email: upgautam@vt.edu
+  github: https://github.com/uddhavgautam3
+  scholar: https://www.researchgate.net/profile/Uddhav-Gautam-2
+  researchgate: https://www.researchgate.net/profile/Uddhav-Gautam-2
+  cv: /cv/Resume_UddhavGautam.pdf
+  number_educ: 4
+  education1: (2024-) PhD Student, Virginia Tech (with <a href="https://cs.vt.edu/people/faculty/dan-williams.html" target="_blank">Dan Williams</a>)
+  education2: (2015-2017) M.S. Computer Science, University of Arkansas at Little Rock
+  education3: (2009-2013) BSc Computer Science, Tribhuvan University, Nepal
+  education4: (2007-2010) B.S. Mathematics, Trichandra Campus, Nepal

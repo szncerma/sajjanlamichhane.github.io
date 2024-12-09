@@ -34,45 +34,33 @@ permalink: /about/
 </div>
 {% endfor %}
 
-{% if site.data.grants %}
+## Personal Statement
 
-<div class="jumbotron">
-  <h3>Grants</h3>
-  <ul>
-    {% for grant in site.data.grants %}
-      <li>{{ grant.name }}</li>
-    {% endfor %}
-  </ul>
-</div>
-{% endif %}
+With 15+ years of experience in Software Engineering, Mobile Development, Android Tech Lead & Architect, DevOps, and
+System/Network Administration,
+I've led as Senior/Lead Developer for multiple start-ups. Significantly, I architected and oversaw TD Ameritrade's
+transition_hub, facilitating seamless migration for millions to Charles Schwab's platform.
+I am currently researching in System, specifically in technologies such as Linux Kernel, Process Abstraction,
+Virtualization, Containerization etc.
 
 {% if site.data.awards %}
 
-<div class="jumbotron">
-  <h3>Awards</h3>
-  <ul>
-    {% for award in site.data.awards %}
-      <li>{{ award.name | replace: "-","&#8211;" }}</li>
-    {% endfor %}
-  </ul>
-</div>
+## Awards
+
+{% for award in site.data.awards %}
+
+* {{ award.name }}
+  {% endfor %}
+
 {% endif %}
 
-{% if site.data.people %}
+{% if site.data.grants %}
 
-<div class="jumbotron">
-  <h3>Students and Mentoring</h3>
-  <ul>
-    {% for student in site.data.people %}
-      <li>{{ student.name }}, {{ student.location }} ({{ student.degree }}, {{ student.year }})</li>
-    {% endfor %}
-  </ul>
-</div>
+## Grants
+
+{% for grant in site.data.grants %}
+
+* {{ grant.name }}
+  {% endfor %}
+
 {% endif %}
-
-<div class="jumbotron">
-  <h4>Sponsors</h4>
-  <div style='display:block; text-align:center; margin-left:auto; margin-right:auto;'>
-  {% for funder in site.data.funders %}<a href="{{ funder.url }}" target="_blank"><img src='{{ site.url }}{{ site.baseurl }}/images/{{ funder.image }}' style='max-height: 80px; max-width: 200px; margin: 1%'/></a>{% endfor %}
-  </div>
-</div>

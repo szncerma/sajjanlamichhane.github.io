@@ -1,0 +1,18 @@
+- title: Eliminating eBPF Tracing Overhead on Untraced Processes
+  authors:
+    Craun, Milo and Hussain, Khizar and Gautam, Uddhav and Ji, Zhengjie and Rao, Tanuj and Williams, Dan
+  url: ebpfmoo-2024
+  display: <b>Published in</b>, Association for Computing Machinery
+  year: 2024
+  doi: https://doi.org/10.1145/3672197.3673431
+  abstract: "Current eBPF-based kernel extensions affect entire systems, and are coarse-grained. For some use cases, like tracing, operators are more interested in tracing a subset of processes (e.g., belonging to a container) rather than all processes. While overhead from tracing is expected for targeted processes, we find untraced processes---those that are not the target of tracing---also incur performance overhead. To better understand this overhead, we identify and explore three techniques for per-process filtering for eBPF: post-eBPF, in-eBPF, and pre-eBPF filtering, finding that all three approaches result in excessive overhead on untraced processes. Finally, we propose a system that allows for zero-untraced-overhead per-process eBPF tracing by modifying kernel virtual memory mappings to present per-process kernel views, effectively enabling untraced processes to execute on the kernel as if no eBPF programs are attached."
+
+- title: HELOT-Hunting Evil Life in Operational Technology
+  authors:
+    Syed Akailvi, Uddhav Gautam, Praveshika Bhandari, Hadi Rashid, Philip D. Huff, Jan P. Springer
+  url: helot-2023
+  display: <b>Published in</b>, IEEE Transactions on Smart Grid
+  year: 2023
+  doi: https://doi.org/10.1109/TSG.2022.3222261
+  abstract: "Operational technology (OT) refers to the industrial counterpart of information technology (IT). OT encompasses technology, systems, and protocols used in industrial operations for controlling, monitoring, and operating of industrial systems. Unlike standard IT systems, OT systems, such as those used in the industry, usually cannot be taken off-line in the event of postmortem forensics investigations. To remedy this situation we present a software architecture and prototype realization that allows the continuous capture of events within OT systems, IT systems, and the interconnected network(s). Our architecture can be realized with existing technologies while also allowing for extension and customization in functionality as well as application to diverse domains. We outline two application cases: capturing of forensics artifacts from a live OT system and possible paths for automation to reduce the cognitive load for cybersecurity operators in combined IT/OT environments."
+

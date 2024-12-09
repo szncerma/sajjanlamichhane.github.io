@@ -1,36 +1,67 @@
-<div>
-{% for member in site.data.pi %}
-<div class="jumbotron">
-   <center>
-   <a href="{{site.url}}{{site.baseurl}}/about"><img src="{{site.url}}{{site.baseurl}}/images/{{ member.photo }}" width="60%" style="block:inline; margin-left:auto; margin-right:auto; margin-bottom:5px;"/></a>
-   <h4>{{ member.name }}</h4>
-   <div style="margin-bottom:5px">
-   {% if member.email %}<a href="mailto:{{ member.email }}" target="_blank"><i class="fa fa-envelope-square fa-3x"></i></a> {% endif %}
-   {% if member.cv %} <a href="{{ site.url }}{{ site.baseurl }}/{{ member.cv }}" target="_blank"><i class="ai ai-cv-square ai-3x"></i></a> {% endif %}
-   {% if member.scholar %} <a href="{{ member.scholar }}" target="_blank"><i class="ai ai-google-scholar-square ai-3x"></i></a> {% endif %}
-   {% if member.github %} <a href="{{ member.github }}" target="_blank"><i class="fa fa-github-square fa-3x"></i></a> {% endif %}
-   {% if member.researchgate %} <a href="{{ member.researchgate }}" target="_blank"><i class="ai ai-researchgate-square ai-3x"></i></a> {% endif %}
-  </div>
-  </center>
+<div style="text-align: center;">
 
-  <ul style="overflow: hidden">
-    {% for education in member.educationshort %}
-      <li>{{ education | replace: "-","&#8211;" }}</li>
+    {% for member in site.data.pi %}
+    <div style="text-align: center;">
+        <img alt="{{ member.name }}" src="{{ site.url }}{{ site.baseurl }}/images/teampic/{{ member.photo }}"
+             width="100%"/>
+        <h1>{{ member.name }}</h1>
+        <i style="font-size:20px">({{ member.info }})</i><br>
+    </div>
+
+    <div style="text-align: center;">
+        {% if member.scholar %} <a href="{{ member.scholar }}" target="_blank"><i
+            class="ai ai-google-scholar-square ai-3x"></i></a> {% endif %}
+        {% if member.cv %} <a href="{{ member.cv }}" target="_blank"><i class="ai ai-cv-square ai-3x"></i></a> {% endif
+        %}
+        {% if member.github %} <a href="{{ member.github }}" target="_blank"><i
+            class="fa fa-github-square fa-3x"></i></a> {% endif %}
+        {% if member.researchgate %} <a href="{{ member.researchgate }}" target="_blank"><i
+            class="ai ai-researchgate-square ai-3x"></i></a> {% endif %}
+    </div>
     {% endfor %}
-  </ul>
 
 </div>
-{% endfor %}
-</div>
+
 
 <div class="jumbotron">
-  <h4>News</h4>
+    <h4>News</h4>
 
-  {% for article in site.data.news limit:3 %}
-  <b>{{ article.date }}</b>
+    {% for article in site.data.news limit:3 %}
+    <b>{{ article.date }}</b>
     <p>{{ article.headline }}</p>
-  {% endfor %}
-  
-  <h5><a href="{{ site.url }}{{ site.baseurl }}/allnews.html">... see all News</a></h5>
+    {% endfor %}
+
+    <h5><a href="{{ site.url }}{{ site.baseurl }}/allnews.html">... see all News</a></h5></br></br>
 
 </div>
+
+<div class="well">
+    <h4>Upcoming Events</h4>
+    {% for article in site.data.events limit:5 %}
+    <b>{{ article.date }}</b>
+    <p>{{ article.headline }}<br/>
+        <i>{{ article.location }}</i></p>
+    {% endfor %}
+</div>
+
+</br></br>
+
+<!--<div class="well">-->
+<!--    <h4>Funding</h4>-->
+<!--    <style>-->
+<!--        .mycenter {-->
+<!--            display: block;-->
+<!--            margin-left: auto;-->
+<!--            margin-right: auto;-->
+<!--        }-->
+<!--    </style>-->
+<!--    {% for funder in site.data.funders %}-->
+<!--    {% if funder.url %}-->
+<!--    <a href="{{funder.url}}" target="_blank"><img class='mycenter' src='/images/logopic/{{ funder.image }}'-->
+<!--                                                  style='max-height: 70px; max-width: 200px;'/></a>-->
+<!--    {% else %}-->
+<!--    <img class='mycenter' src='/images/logopic/{{ funder.image }}' style='max-height: 70px; max-width: 200px;'/>-->
+<!--    {% endif %}-->
+<!--    {% endfor %}-->
+<!--</div>-->
+

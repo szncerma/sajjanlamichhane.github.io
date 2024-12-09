@@ -5,28 +5,46 @@ sitemap: false
 permalink: /
 ---
 
-### Welcome!
+<style>
+code {padding: 6px 8px; font-size: 90%;}
+</style>
 
-Theoretical physics is a branch of physics that focuses on the development of mathematical models and theories to understand and explain natural phenomena.
-It plays a crucial role in our understanding of the fundamental laws of the universe and the fundamental particles that make up all matter.
-Research in theoretical physics helps us to make predictions about how the universe works and to test these predictions through experiments.
-It also helps us to understand the fundamental principles that govern the behavior of matter and energy, and to explore the limits of our current knowledge.
-Theoretical physics helps us to make progress in a wide range of fields, including cosmology, particle physics, and quantum mechanics, and it has led to many important discoveries and technological innovations.
+# Welcome!
 
-<div class="container">
-<div class="row">
-<center>
-<img src="{{ site.url }}{{ site.baseurl }}/images/banner.jpg" width="100%"/><br/>
-Examples of Feynman diagrams. <br/>
-Feynman R., The theory of positrons. <i>Phys. Rev.</i> (1949)
-</center>
-</div>
-</div>
 <br/>
 
-### About me
+#### `$whoami`
 
-I am a physicist working in the field of quantum mechanics and quantum electrodynamics.
-I received my undergraduate degree in physics from the Massachusetts Institute of Technology (MIT) in 1939 and went on to earn my PhD from Princeton University in 1942.
-After completing my doctoral studies, I worked on the Manhattan Project, where I helped develop the first atomic bombs.
-After the war, I returned to academia, holding teaching and research positions at Cornell and now at the California Institute of Technology.
+I am currently working as a researcher in the Linux Kernel and eBPF space at Virginia Tech, where my focus is on
+exploring and improving various kernel components. My work includes developing eBPF-based tracing and profiling use
+cases, and instrumenting the kernel for both micro and macro benchmarking. I’ve also published a paper on eliminating
+eBPF tracing overhead on untraced processes.
+
+In addition, I’ve developed kernel modules for various use cases, such as propagating user-space code into kernel-space
+and triggering kernel functions. As part of my research, I added a custom Kfunc to enhance eBPF, enabling it to
+serialize and deserialize Protocol Buffers (protobuf). I also created an in-kernel firewall using protobuf data and
+integrated user-space tools like pbtool for processing protocol buffers in the kernel.
+
+Additionally, I use tracing tools such as BPFTrace, Strace, and Ftrace for debugging and performance testing to drive
+further optimizations in the Linux Kernel and its networking stack. I am also working on porting my research findings to
+the Android Kernel to extend the impact of my work and improve performance across both platforms.
+
+<div class="row" style="text-align:center">
+  <img src="/images/logopic/wallLinux.png" alt="Linux Kernel Image" style="width: 100%; height: 100%;">
+</div>
+
+#### `$id`
+I am currently working towards my PhD in Computer Science at <a href="https://www.vt.edu/" target="_blank">Virginia
+Tech</a>, under the guidance of Professor <a href="https://cs.vt.edu/people/faculty/dan-williams.html" target="_blank">
+Dan Williams</a>.
+Previously, I was a Mobile Solutions Technical Lead & Architect
+at <a href="https://www.perficient.com/" target="_blank">Perficient Inc </a> contracting for TD Ameritrade -- now owned
+by Charles Schwab -- and <a href="https://www.schwab.com/" target="_blank">Charles Schwab</a>.
+I have an M.S. in Computer Science from the <a href="https://ualr.edu/" target="_blank">University of Arkansas at Little
+Rock </a> (2015 - 2017).
+I hold two B.S. degrees, one in Computer Science (2009 - 2013), and another in Mathematics (2007 - 2010) both from
+the <a href="https://tu.edu.np/" target="_blank">Tribhuvan University</a>, Nepal.
+
+
+
+
