@@ -36,9 +36,9 @@ permalink: /about/
 
 ## Personal Statement
 
-With 15+ years of experience in Software Engineering, Mobile Development, Android Tech Lead & Architect, DevOps, and
+With decades of experience in Software Engineering, Mobile Development, Android Tech Lead & Architect, and
 System/Network Administration,
-I've led as Senior/Lead Developer for multiple start-ups. Significantly, I architected and oversaw TD Ameritrade's
+I've led as Senior/Lead Developer for multiple enterprises. Significantly, I architected and oversaw TD Ameritrade's
 transition_hub, facilitating seamless migration for millions to Charles Schwab's platform.
 I am currently researching in System, specifically in technologies such as Linux Kernel, Process Abstraction,
 Virtualization, Containerization etc.
