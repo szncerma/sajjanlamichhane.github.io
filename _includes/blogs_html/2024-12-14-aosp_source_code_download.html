@@ -1,0 +1,38 @@
+<h1 id="aosp-source-code-download">AOSP Source Code Download</h1>
+<h2 id="download-aosp-source">Download AOSP Source</h2>
+<pre><code class="language-bash"># takes hours depending on your internet speed
+cd aosp
+upgautam@amd:/opt/aosp$ repo init -b main -u https://android.googlesource.com/platform/manifest
+Downloading Repo source from https://gerrit.googlesource.com/git-repo
+
+Your identity is: upgautamvt &lt;upgautam@vt.edu&gt;
+If you want to change this, please re-run &#39;repo init&#39; with --config-name
+
+repo has been initialized in /opt/aosp
+</code></pre>
+<p>Now, repo sync downloads the source code.</p>
+<p>Now, verify the download is authentic and complete.
+For complete, we need to check the last latest commit hash. </p>
+<p>Source code tags and builds: <a href="https://source.android.com/docs/setup/reference/build-numbers#source-code-tags-and-builds">https://source.android.com/docs/setup/reference/build-numbers#source-code-tags-and-builds</a></p>
+<p>But above  linked page doesn&#39;t mention anything about branch or list branches. I found them here: <a href="https://cs.android.com/android/platform/superproject">https://cs.android.com/android/platform/superproject</a></p>
+<p>The cs.android.com site is like a bootlin for Linux Kernel.</p>
+<p>But above  linked page doesn&#39;t mention anything about branch or list branches. I found them here: <a href="https://cs.android.com/android/platform/superproject">https://cs.android.com/android/platform/superproject</a></p>
+<p>The cs.android.com site is like a bootlin for Linux Kernel.</p>
+<h2 id="prepare-for-emulator">Prepare For Emulator</h2>
+<p>Let&#39;s stick to Cuttlefish Emulator for now. </p>
+<p>#Android Build ID</p>
+<p>In Android 8.0.0 (Oreo) and higher builds are identified with the build ID format PVBB.YYMMDD.bbb[.Cn], where:</p>
+<ul>
+<li>P represents the first letter of the codename of the platform release, for example, O is Oreo. For Android 10 and later codenames, the letter equivalent is used, such as Q for Android 10 and R for Android 11.</li>
+<li>V represents a supported vertical. By convention, P represents the primary platform branch.</li>
+<li>BB is an alphanumeric code that allows Google to identify the exact code branch the build was made from.</li>
+<li>YYMMDD identifies the date when the release is branched from or synced with the development branch. It&#39;s not always the exact date at which a build was made as it&#39;s common for minor variations added to an existing build to re-use the same date code as the existing build.</li>
+<li>bbb identifies individual versions related to the same date code, sequentially starting with 001.</li>
+<li>Cn is an optional, alphanumeric that identifies a hotfix on top of an existing PVBB.YYMMDD.bbb build, starting from A1.</li>
+</ul>
+<p>What is for AP4A.241205.013.C1?
+A is Vanilla Ice Cream although Vanilla Ice Cream don&#39;t starts with A. This is just to make it unique. </p>
+<h2 id="android-code-names">Android Code Names</h2>
+<p>Pixel 8 Pro (husky)
+Pixel 8a (akita)
+See more here:  <a href="https://source.android.com/docs/setup/reference/build-numbers#source-code-tags-and-builds">https://source.android.com/docs/setup/reference/build-numbers#source-code-tags-and-builds</a></p>
