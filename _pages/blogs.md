@@ -4,7 +4,15 @@ layout: page
 sitemap: false
 permalink: /blogs/
 ---
-
+<style>
+code {padding: 6px 8px; font-size: 90%;}
+body {
+    text-align: justify;
+}
+.jumbotron {
+    text-align: left; 
+}
+</style>
 <ul>
   {% for post in site.posts %}
     <li>

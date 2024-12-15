@@ -5,6 +5,16 @@ sitemap: false
 permalink: /about/
 ---
 
+<style>
+code {padding: 6px 8px; font-size: 90%;}
+body {
+    text-align: justify;
+}
+.jumbotron {
+    text-align: left; 
+}
+</style>
+
 ## About
 
 {% for member in site.data.pi %}
