@@ -15,7 +15,7 @@ code {padding: 6px 8px; font-size: 90%;}
 
 #### `$whoami`
 
-I am currently working as a researcher in the Linux Kernel and eBPF space at Virginia Tech, where my focus is on
+I am Uddhav P. Gautam. I am currently working as a researcher in the Linux Kernel and eBPF space at Virginia Tech, where my focus is on
 exploring and improving various kernel components. My work includes developing eBPF-based tracing and profiling use
 cases, and instrumenting the kernel for both micro and macro benchmarking. I’ve also published a paper on eliminating
 eBPF tracing overhead on untraced processes.
