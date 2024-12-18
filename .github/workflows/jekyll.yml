@@ -29,53 +29,63 @@ concurrency:
 jobs:
   # Build job
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Use self-hosted runner if needed, adjust accordingly
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@8575951200e472d5f2d95c625da0c7bec8217c42 # v1.161.0
-        with:
-          ruby-version: '3.1' # Not needed with a .ruby-version file
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-          cache-version: 0 # Increment this number if you need to re-download cached gems
+
+      # Install dependencies for Ruby build
       - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y curl git libssl-dev libreadline-dev zlib1g-dev
 
+      # Install rbenv and ruby-build to manage Ruby versions
       - name: Install Ruby using ruby-build
         run: |
-          # Install rbenv and ruby-build
+          # Install rbenv
           curl -fsSL https://github.com/rbenv/rbenv-installer/raw/main/bin/rbenv-installer | bash
+          
+          # Add rbenv to PATH
           echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
           echo 'eval "$(rbenv init -)"' >> ~/.bashrc
           source ~/.bashrc
 
-          # Install Ruby version 3.1.4
+          # Install ruby-build plugin for rbenv
+          git clone https://github.com/rbenv/ruby-build.git "$(rbenv root)/plugins/ruby-build"
+
+          # Install Ruby version 3.1.4 using ruby-build
           rbenv install 3.1.4
 
-          # Set global Ruby version
+          # Set Ruby 3.1.4 as the global version
           rbenv global 3.1.4
 
-          # Mark as complete
+          # Mark Ruby installation as complete
           touch /opt/hostedtoolcache/Ruby/3.1.4/x64.complete
 
       - name: Verify Ruby installation
         run: |
+          # Check Ruby version
           ruby --version
+
+          # Install Bundler and dependencies
           gem install bundler
           bundle install
+
+      # Setup Pages for deployment
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
+
+      # Build the Jekyll site
       - name: Build with Jekyll
-        # Outputs to the './_site' directory by default
         run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
         env:
           JEKYLL_ENV: production
+
+      # Upload the built Jekyll site as an artifact
       - name: Upload artifact
-        # Automatically uploads an artifact from the './_site' directory by default
         uses: actions/upload-pages-artifact@v3
 
   # Deployment job
