@@ -1,0 +1,49 @@
+<h1 id="dummy-android-system-app">Dummy Android System App</h1>
+<p>I am running all the below commands from two locations: 1) from aosp root folder 2) from where the cuttlefish android emulator is installed.</p>
+<pre><code class="language-bash">upgautam@amd:/opt/aosp$ source build/envsetup.sh
+upgautam@amd:/opt/cuttlefish/cuttlefish-run/combined$ HOME=$PWD ./bin/launch_cvd
+
+upgautam@amd:/opt/cuttlefish/cuttlefish-run/combined/bin$ ./adb devices
+List of devices attached
+0.0.0.0:6520	device
+
+upgautam@amd:/opt/cuttlefish/cuttlefish-run/combined/bin$ ./adb root
+restarting adbd as root
+upgautam@amd:/opt/cuttlefish/cuttlefish-run/combined/bin$ ./adb remount
+Successfully disabled verity
+Using overlayfs for /system
+Using overlayfs for /odm
+Using overlayfs for /product
+Using overlayfs for /system_ext
+Using overlayfs for /vendor
+Using overlayfs for /vendor_dlkm
+Using overlayfs for /odm_dlkm
+Using overlayfs for /system_dlkm
+Verity disabled; overlayfs enabled.
+</code></pre>
+<p>Now reboot your device for settings to take effect</p>
+<pre><code class="language-bash">upgautam@amd:/opt/cuttlefish/cuttlefish-run/combined/bin$ ./adb reboot
+```bash
+
+Now, we can write inside /system/priv-app/. But it didn&#39;t work, so I manually created directory and set the 777 permission.
+
+```bash
+upgautam@amd:/opt/cuttlefish/cuttlefish-run/combined/bin$ ./adb shell
+vsoc_x86_64:/ $ su
+vsoc_x86_64:/ # mount -o rw,remount /system
+vsoc_x86_64:/ # mkdir /system/priv-app/dummy_app
+vsoc_x86_64:/ # chmod 777 /system/priv-app/dummy_app
+
+vsoc_x86_64:/ # getenforce
+Enforcing
+</code></pre>
+<p>We need to disable SELinux</p>
+<pre><code class="language-bash">vsoc_x86_64:/ # setenforce 0
+</code></pre>
+<p>now, we can adb push,</p>
+<pre><code class="language-bash">upgautam@amd:/opt/cuttlefish/cuttlefish-run/combined/bin$ ./adb push ~/Desktop/DummyApp/app-debug.apk /system/priv-app/dummy_app/app-debug.apk
+/home/upgautam/Desktop/DummyApp/app-debu...ped. 23.8 MB/s (8667869 bytes in 0.348s)
+
+upgautam@amd:/opt/cuttlefish/cuttlefish-run/combined/bin$ ./adb reboot
+</code></pre>
+<p>Your dummy system app will be in your device.</p>
