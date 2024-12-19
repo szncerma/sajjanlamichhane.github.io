@@ -37,7 +37,7 @@ vsoc_x86_64:/ # chmod 777 /system/priv-app/dummy_app
 vsoc_x86_64:/ # getenforce
 Enforcing
 </code></pre>
-<p>We need to disable SELinux</p>
+<p>We need to disable SELinux. Having root user is Discretionary Access Control (not so granular and based on user type), but SELinux is Linux Security Module (LSM), which is Mandatory Access Control (MAC). SELinux operates on this principle, where access control is based on predefined policies, not individual users&#39; permissions. Even the root user (who typically has full control in a DAC system) is constrained by SELinux policies, which enforce more granular controls.</p>
 <pre><code class="language-bash">vsoc_x86_64:/ # setenforce 0
 </code></pre>
 <p>now, we can adb push,</p>
@@ -46,4 +46,208 @@ Enforcing
 
 upgautam@amd:/opt/cuttlefish/cuttlefish-run/combined/bin$ ./adb reboot
 </code></pre>
-<p>Your dummy system app will be in your device.</p>
+<p>Your dummy system app will be in your device. To make sure this is system app, if you try to uninstall, you won&#39;t see uninstall options. You will see only disable and pause options. </p>
+<h2 id="reflection">Reflection</h2>
+<p>What we did is, we created a normal android Dummy app, and uploaded that inside where system app reside. This makes our normal app is now system app. But the idea behind making system app is to give more control. We didn&#39;t define permission that system app can only use (not the one that normal app use). For example, we can declare system permissions, such as, </p>
+<pre><code class="language-xml">&lt;uses-permission android:name=&quot;android.permission.ACCESS_SUPERUSER&quot; /&gt;
+&lt;uses-permission android:name=&quot;android.permission.SYSTEM_ALERT_WINDOW&quot; /&gt;
+</code></pre>
+<p><strong>Note</strong>: Declaraing the same system permission for normal app doesn&#39;t grant the permission as permission declaration is different to permission granting.  </p>
+<p>Android system ensures if those system permission are declared and those are the system app then they are granted those permission. To test this, I modified my dummy app as follows, </p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;manifest xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:tools=&quot;http://schemas.android.com/tools&quot;&gt;
+    &lt;uses-permission android:name=&quot;android.permission.ACCESS_SUPERUSER&quot; /&gt;
+    &lt;uses-permission android:name=&quot;android.permission.SYSTEM_ALERT_WINDOW&quot; /&gt;
+    &lt;application
+        android:allowBackup=&quot;true&quot;
+        android:dataExtractionRules=&quot;@xml/data_extraction_rules&quot;
+        android:fullBackupContent=&quot;@xml/backup_rules&quot;
+        android:icon=&quot;@mipmap/ic_launcher&quot;
+        android:label=&quot;@string/app_name&quot;
+        android:roundIcon=&quot;@mipmap/ic_launcher_round&quot;
+        android:supportsRtl=&quot;true&quot;
+        android:theme=&quot;@style/Theme.DummySystemApplication&quot;
+        tools:targetApi=&quot;31&quot;&gt;
+        &lt;activity
+            android:name=&quot;.MainActivity&quot;
+            android:exported=&quot;true&quot;
+            android:label=&quot;@string/app_name&quot;
+            android:theme=&quot;@style/Theme.DummySystemApplication&quot;&gt;
+            &lt;intent-filter&gt;
+                &lt;action android:name=&quot;android.intent.action.MAIN&quot; /&gt;
+
+                &lt;category android:name=&quot;android.intent.category.LAUNCHER&quot; /&gt;
+            &lt;/intent-filter&gt;
+        &lt;/activity&gt;
+    &lt;/application&gt;
+
+&lt;/manifest&gt;
+</code></pre>
+<p>And, my activtiy as, </p>
+<pre><code class="language-kotlin">package com.example.dummysystemapplication
+
+import android.os.Bundle
+import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import com.example.dummysystemapplication.ui.theme.DummySystemApplicationTheme
+import android.util.Log
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import kotlin.concurrent.thread
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+
+        // Try to execute a root command as soon as the app is opened
+        if (isRooted()) {
+            setSelinuxPermissive()
+            executeRootCommand()
+        } else {
+            Toast.makeText(this, &quot;Device is not rooted!&quot;, Toast.LENGTH_SHORT).show()
+        }
+
+        setContent {
+            DummySystemApplicationTheme {
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding -&gt;
+                    Greeting(
+                        name = &quot;Uddha P. Gautam&quot;,
+                        modifier = Modifier.padding(innerPadding)
+                    )
+                }
+            }
+        }
+    }
+
+    // Check if the device is rooted by looking for su binary
+    private fun isRooted(): Boolean {
+        return try {
+            val process = Runtime.getRuntime().exec(&quot;which su&quot;)
+            val reader = BufferedReader(InputStreamReader(process.inputStream))
+            val output = reader.readLine()
+            output != null &amp;&amp; output.isNotEmpty()
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    // Set SELinux to permissive mode
+    private fun setSelinuxPermissive() {
+        thread {
+            try {
+                // This command sets SELinux to permissive mode
+                val process = Runtime.getRuntime().exec(&quot;su&quot;)
+                process.outputStream.write(&quot;setenforce 0\n&quot;.toByteArray())
+                process.outputStream.flush()
+
+                val reader = BufferedReader(InputStreamReader(process.inputStream))
+                val output = StringBuilder()
+                var line: String?
+                while (reader.readLine().also { line = it } != null) {
+                    output.append(line).append(&quot;\n&quot;)
+                }
+
+                // Show output
+                Log.d(&quot;SELinux&quot;, &quot;SELinux set to permissive mode:\n$output&quot;)
+                runOnUiThread {
+                    Toast.makeText(this, &quot;SELinux set to permissive mode:\n$output&quot;, Toast.LENGTH_LONG).show()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                runOnUiThread {
+                    Toast.makeText(this, &quot;Failed to set SELinux permissive&quot;, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    // Function to execute root commands
+    private fun executeRootCommand() {
+        thread {
+            try {
+                // Execute a root command using the &#39;su&#39; binary
+                val process = Runtime.getRuntime().exec(&quot;su&quot;)
+                val commands = arrayOf(
+                    &quot;ls /root&quot;,  // Example command: list root directory
+                    &quot;ls /system&quot; // Another example command: list system directory
+                )
+
+                // Send commands to be executed by the root shell
+                for (command in commands) {
+                    process.outputStream.write((command + &quot;\n&quot;).toByteArray())
+                    process.outputStream.flush()
+                }
+
+                // Read and capture the output of the commands
+                val reader = BufferedReader(InputStreamReader(process.inputStream))
+                var line: String?
+                val output = StringBuilder()
+                while (reader.readLine().also { line = it } != null) {
+                    output.append(line).append(&quot;\n&quot;)
+                }
+
+                // Show the output in a Toast or Log
+                Log.d(&quot;RootCommand&quot;, &quot;Root Command Output:\n$output&quot;)
+                runOnUiThread {
+                    Toast.makeText(this, &quot;Root Command Output:\n$output&quot;, Toast.LENGTH_LONG).show()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                runOnUiThread {
+                    Toast.makeText(this, &quot;Error executing root command&quot;, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun Greeting(name: String, modifier: Modifier = Modifier) {
+    Text(
+        text = &quot;Hello $name!&quot;,
+        modifier = modifier
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun GreetingPreview() {
+    DummySystemApplicationTheme {
+        Greeting(&quot;Uddhav P. Gautam&quot;)
+    }
+}
+</code></pre>
+<p>I built and output the apk to desktop/DummyApp folder again. I then uninstall using pm command (** or I could even simply skip because when I push, it would replace my previous old apk anyway **). </p>
+<pre><code>upgautam@amd:/opt/cuttlefish/cuttlefish-run/combined/bin$ ./adb shell
+vsoc_x86_64:/ $ su
+vsoc_x86_64:/ #  mount -o rw,remount /system
+vsoc_x86_64:/ # chmod 777 /system/priv-app/dummy_app
+vsoc_x86_64:/ # setenforce 0
+vsoc_x86_64:/ # rm -rf /system/priv-app/dummy_app/app-debug.apk
+vsoc_x86_64:/ # pm disable-user com.example.dummysystemapplication
+vsoc_x86_64:/ am force-stop com.example.dummysystemapplication
+upgautam@amd:/opt/cuttlefish/cuttlefish-run/combined/bin$ ./adb push ~/Desktop/DummyApp/app-debug.apk /system/priv-app/dummy_app/app-debug.apk
+/home/upgautam/Desktop/DummyApp/app-debu...ped. 21.2 MB/s (8674259 bytes in 0.389s)
+upgautam@amd:/opt/cuttlefish/cuttlefish-run/combined/bin$ ./adb reboot
+</code></pre>
+<pre><code class="language-bash">upgautam@amd:/opt/cuttlefish/cuttlefish-run/combined/bin$ ./adb push ~/Desktop/DummyApp/magisk.apk /data/local/tmp/magisk.apk
+/home/upgautam/Desktop/DummyApp/magisk.apk: 1 file pushed, 0 skipped. 812.0 MB/s (11716982 bytes in 0.014s)
+upgautam@amd:/opt/cuttlefish/cuttlefish-run/combined/bin$ ./adb shell
+vsoc_x86_64:/ $ pm install /data/local/tmp/magisk.apk
+Success
+vsoc_x86_64:/ $ pm install /data/local/tmp/RootExplorer.apk
+</code></pre>
+<p>Also installed magisk as user-space app (not system app) like RootExplorer. Then I uploaded boot.img of cuttlefish into /data/local/tmp folder. From Magisk, patched boot.img, and download that into host&#39;s DummyApp folder again, renamed it to bootRooted.img. Now, the steps remained are to flashboot with bootRooted.img. </p>
+<p>upgautam@amd:/opt/cuttlefish/cuttlefish-run/combined/bin$ ./adb reboot bootloader </p>
+<p>I can&#39;t do fastboot flash for cuttlefish. Here is solution: <a href="https://android-review.googlesource.com/c/device/google/cuttlefish/+/1490538">https://android-review.googlesource.com/c/device/google/cuttlefish/+/1490538</a></p>
