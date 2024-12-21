@@ -197,7 +197,7 @@ upgautam@amd:/opt/cuttlefish/cuttlefish-run/combined/bin$ ./adb shell
 vsoc_x86_64:/ # am start com.example.dummysystemapplication/.MainActivity
 Starting: Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=com.example.dummysystemapplication/.MainActivity }
 </code></pre>
-<p>Still the issue exists.. I can&#39;t make it work. I can&#39;t test its superpower, although it is a system app.  I tried cuttlefish emulator with original boot.img, the same issue. </p>
+<p>Still the issue exists. I can&#39;t make it work. I can&#39;t test its superpower, although it is a system app.  I tried cuttlefish emulator with original boot.img, the same issue. </p>
 <pre><code class="language-bash">upgautam@amd:/opt/cuttlefish/cuttlefish-run/combined/bin$ ./adb push ~/Desktop/DummyApp/app-debug.apk /system/priv-app/dummy_app/app-debug.apk
 /home/upgautam/Desktop/DummyApp/app-debug.apk: 1 file pushed, 0 skipped. 22.6 MB/s (8670593 bytes in 0.366s)
 upgautam@amd:/opt/cuttlefish/cuttlefish-run/combined/bin$ ./adb root
