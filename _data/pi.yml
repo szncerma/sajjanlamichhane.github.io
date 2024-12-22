@@ -1,13 +1,12 @@
-- name: Uddhav P. Gautam
-  photo: Uddhav.jpg
-  info: PhD Candidate
-  email: upgautam@vt.edu
-  github: https://github.com/uddhavgautam3
+- name: Sajjan Lamichhane
+  photo: Sajjan.jpg
+  info: Georgia Tech Graduate
+  email: sajjanlamichhaney@gmail.com
+  github: https://github.com/szncerma
   scholar: https://scholar.google.com/citations?hl=en&user=Rbmabp4AAAAJ
   researchgate: https://www.researchgate.net/profile/Uddhav-Gautam-2
-  cv: /cv/Resume_UddhavGautam.pdf
-  number_educ: 4
-  education1: (2024-) PhD Student, Virginia Tech (with <a href="https://cs.vt.edu/people/faculty/dan-williams.html" target="_blank">Dan Williams</a>)
-  education2: (2015-2017) M.S. Computer Science, University of Arkansas at Little Rock
+  cv: /cv/Resume_Sajjan_Lamichhane.pdf
+  number_educ: 3
+  education1: (2020-2022) M.S. Analytics, Georgia Institute of Technology
+  education2: (2016-2018) M.S. Computer Science, University of Central Missouri
   education3: (2009-2013) BSc Computer Science, Tribhuvan University, Nepal
-  education4: (2007-2010) B.S. Mathematics, Trichandra Campus, Nepal

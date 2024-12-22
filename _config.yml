@@ -1,7 +1,7 @@
 # Site settings
-title: Uddhav Gautam
-email: upgautam@vt.edu
-description: Academic webpage of Uddhav P. Gautam
+title: Sajjan Lamichhane
+email: sajjanlamichhaney@gmail.com
+description: Academic webpage of Sajjan Lamichhane
 baseurl: ""
 url: ""
 
@@ -12,23 +12,23 @@ url: ""
 
 # Footer info
 affiliation: >
-  Uddhav P. Gautam<br/>
-  PhD Candidate<br/>
-  Virginia Tech
+  Sajjan Lamichhane<br/>
+  Business Intelligence Developer <br/>
+  West Chester University of Pennsylvania
 
 location: >
-  Virginia Polytechnic Institute<br/>
-  Blacksburg<br/>
-  Virginia, 24060
+  West Chester University of Pennsylvania<br/>
+  West Chester<br/>
+  Pennsylvania, 19383
 
 contact: >
-    <a href="mailto:upgautam@vt.edu" target="_blank"><i class="fa fa-envelope fa-1x"></i> Contact Udhav Gautam via email</a> <br/>
+    <a href="mailto:sajjanlamichhaney@gmail.com" target="_blank"><i class="fa fa-envelope fa-1x"></i> Contact Sajjan Lamichhane via email</a> <br/>
     <a href="https://github.com/sbryngelson/academic-website-template"><i class="fa fa-github fa-1x"></i> Use this site as a template!</a>
 
 # Pages shown in navbar
 nav_pages:
   - name: about
-  - name: publications
+#  - name: publications
 #  - name: talks
 #  - name: research
 #  - name: software
